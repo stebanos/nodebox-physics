@@ -1,4 +1,4 @@
-package demolib;
+package nodebox.physics;
 
 import net.phys2d.raw.strategies.QuadSpaceStrategy;
 import nodebox.node.*;
@@ -11,7 +11,7 @@ import net.phys2d.raw.World;
 import net.phys2d.raw.shapes.Box;
 
 @Description("Demonstrate some physics.")
-@Category("Demolib")
+@Category("Physics")
 public class PhysicsNode extends Node {
 
     public final IntPort pAmount = new IntPort(this, "amount", Port.Direction.INPUT, 5);
