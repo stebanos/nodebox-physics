@@ -7,23 +7,22 @@ import net.phys2d.math.Vector2f;
 import net.phys2d.raw.Body;
 import net.phys2d.raw.BodyList;
 import net.phys2d.raw.StaticBody;
-import net.phys2d.raw.World;
 import net.phys2d.raw.shapes.Box;
 
-@Description("Demonstrate some physics.")
+@Description("Populate a World.")
 @Category("Physics")
-public class PhysicsNode extends Node {
+public class World extends Node {
 
     public final IntPort pAmount = new IntPort(this, "amount", Port.Direction.INPUT, 5);
     private int currentAmount = -1;
     
-    private World world;
+    private net.phys2d.raw.World world;
     private float time = 0;
     
     public void createTheWorld() {
         currentAmount = pAmount.get();
         
-        world = new World(new Vector2f(0.0f, 10.0f), 10, new QuadSpaceStrategy(20,5));
+        world = new net.phys2d.raw.World(new Vector2f(0.0f, 10.0f), 10, new QuadSpaceStrategy(20,5));
         world.clear();
 
 		Body body1 = new StaticBody("Ground1", new Box(400.0f, 20.0f));
