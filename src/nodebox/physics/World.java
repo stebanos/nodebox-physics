@@ -15,6 +15,8 @@ public class World extends Node {
 
     public final IntPort pAmount = new IntPort(this, "amount", Port.Direction.INPUT, 5);
     public final WorldPort pWorld = new WorldPort(this, "world", Port.Direction.OUTPUT);
+    public final BodyListPort pBodies = new BodyListPort(this, "bodies", Port.Direction.OUTPUT);
+
     private int currentAmount = -1;
     
     private net.phys2d.raw.World world;
@@ -57,6 +59,7 @@ public class World extends Node {
         float dt = time - this.time;
         world.step(dt);
         this.time = time;
+        pBodies.set(world.getBodies());
     }
 
     @Override
