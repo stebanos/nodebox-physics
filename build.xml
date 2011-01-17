@@ -30,7 +30,7 @@
 
     <target name="dist" depends="compile,embed-dependencies">
         <mkdir dir="${dist}"/>
-        <jar jarfile="${dist}/demolib.jar" basedir="${build}" manifest="manifest.mf"/>
+        <jar jarfile="${dist}/nodebox-physics.jar" basedir="${build}" manifest="manifest.mf"/>
     </target>
 
     <target name="clean">
