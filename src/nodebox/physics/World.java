@@ -14,6 +14,7 @@ import net.phys2d.raw.shapes.Box;
 public class World extends Node {
 
     public final IntPort pAmount = new IntPort(this, "amount", Port.Direction.INPUT, 5);
+    public final WorldPort pWorld = new WorldPort(this, "world", Port.Direction.OUTPUT);
     private int currentAmount = -1;
     
     private net.phys2d.raw.World world;
@@ -51,6 +52,7 @@ public class World extends Node {
     public void execute(Context context, float time) {
         if (pAmount.get() != currentAmount) {
             createTheWorld();
+            pWorld.set(world);
         }
         float dt = time - this.time;
         world.step(dt);
