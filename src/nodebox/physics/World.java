@@ -13,18 +13,20 @@ import net.phys2d.raw.shapes.Box;
 @Category("Physics")
 public class World extends Node {
 
-    public final IntPort pAmount = new IntPort(this, "amount", Port.Direction.INPUT, 5);
+    public final FloatPort pGravityX = new FloatPort(this, "gravityX", Port.Direction.INPUT, 0);
+    public final FloatPort pGravityY = new FloatPort(this, "gravityY", Port.Direction.INPUT, 10f);
+    public final BooleanPort pReset = new BooleanPort(this, "reset", Port.Direction.INPUT, true);
     public final WorldPort pWorld = new WorldPort(this, "world", Port.Direction.OUTPUT);
     public final BodyListPort pBodies = new BodyListPort(this, "bodies", Port.Direction.OUTPUT);
+    public final JointListPort pJoints = new JointListPort(this, "joints", Port.Direction.OUTPUT);
+    public final BooleanPort pHasReset = new BooleanPort(this, "hasReset", Port.Direction.OUTPUT);
 
-    private int currentAmount = -1;
-    
+    private int amount = 5;
+
     private net.phys2d.raw.World world;
     private float time = 0;
     
     public void createTheWorld() {
-        currentAmount = pAmount.get();
-        
         world = new net.phys2d.raw.World(new Vector2f(0.0f, 10.0f), 10, new QuadSpaceStrategy(20,5));
         world.clear();
 
@@ -41,25 +43,27 @@ public class World extends Node {
 		body6.setPosition(400.0f, 300);
 		world.add(body6);
 
-        for (int i=0;i<currentAmount;i++) {
+        for (int i=0;i<amount;i++) {
             float sz =10 + (float)(Math.random() * 50f);
             Body b = new Body("b" + i, new Box(sz, sz), 100f);
             b.setPosition(100f + (float) (Math.random() * 250f), (float) (Math.random() * 250f));
             world.add(b);
         }
     }
-    
 
     @Override
     public void execute(Context context, float time) {
-        if (pAmount.get() != currentAmount) {
+        if (pReset.get()) {
             createTheWorld();
             pWorld.set(world);
         }
+        world.setGravity(pGravityX.get(), pGravityY.get());
         float dt = time - this.time;
         world.step(dt);
         this.time = time;
         pBodies.set(world.getBodies());
+        pJoints.set(world.getJoints());
+        pHasReset.set(pReset.get());
     }
 
     @Override
@@ -70,7 +74,6 @@ public class World extends Node {
             Body body = bodies.get(i);
             drawBoxBody(g,body,(Box) body.getShape());
         }
-        
     }
 
     protected void drawBoxBody(PGraphics g, Body body, Box box) {
@@ -83,7 +86,4 @@ public class World extends Node {
 		
         g.quad(v1.x, v1.y, v2.x, v2.y, v3.x, v3.y, v4.x, v4.y);
     }
-
-
-
 }
