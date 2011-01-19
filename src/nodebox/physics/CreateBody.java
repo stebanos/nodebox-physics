@@ -2,6 +2,7 @@ package nodebox.physics;
 
 import net.phys2d.math.Vector2f;
 import net.phys2d.raw.Body;
+import net.phys2d.raw.StaticBody;
 import net.phys2d.raw.shapes.DynamicShape;
 import nodebox.node.*;
 
@@ -10,6 +11,7 @@ public abstract class CreateBody extends Node {
     public final WorldPort pWorld = new WorldPort(this, "world", Port.Direction.INPUT);
     public final FloatPort pX = new FloatPort(this, "x", Port.Direction.INPUT);
     public final FloatPort pY = new FloatPort(this, "y", Port.Direction.INPUT);
+    public final BooleanPort pStatic = new BooleanPort(this, "static", Port.Direction.INPUT, false);
     public final FloatPort pMass = new FloatPort(this, "mass", Port.Direction.INPUT, 20f);
     public final FloatPort pFriction = new FloatPort(this, "friction", Port.Direction.INPUT, 0.3f);
     public final FloatPort pRestitution = new FloatPort(this, "restitution", Port.Direction.INPUT, 0.1f);
@@ -25,7 +27,11 @@ public abstract class CreateBody extends Node {
     public void execute(Context context, float time) {
         if (pWorld.get() != null && pCreate.get()) {
             DynamicShape shape = createShape();
-            Body body = new Body(shape, pMass.get());
+            Body body;
+            if (pStatic.get())
+                body = new StaticBody(shape);
+            else
+                body = new Body(shape, pMass.get());
             body.setPosition(pX.get(), pY.get());
             body.setFriction(pFriction.get());
             body.setRestitution(pRestitution.get());

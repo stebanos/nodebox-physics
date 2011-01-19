@@ -30,19 +30,6 @@ public class World extends Node {
     public void createTheWorld() {
         world = new net.phys2d.raw.World(new Vector2f(0.0f, 10.0f), 10, new QuadSpaceStrategy(20,5));
         world.clear();
-
-		Body body1 = new StaticBody("Ground1", new Box(400.0f, 20.0f));
-		body1.setPosition(250.0f, 400);
-		world.add(body1);
-		Body body3 = new StaticBody("Ground2", new Box(200.0f, 20.0f));
-		body3.setPosition(360.0f, 380);
-		world.add(body3);
-		Body body5 = new StaticBody("Ground3", new Box(20.0f, 100.0f));
-		body5.setPosition(200.0f, 300);
-		world.add(body5);
-		Body body6 = new StaticBody("Ground3", new Box(20.0f, 100.0f));
-		body6.setPosition(400.0f, 300);
-		world.add(body6);
     }
 
     @Override
