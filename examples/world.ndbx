@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="3">
+    <node displayName="Root" name="root" type="nodebox.node.Network" x="0" y="0">
+        <node name="box1" type="nodebox.physics.Box" x="13" y="120">
+            <port name="create">false</port>
+            <port name="x">250.0</port>
+            <port name="y">400.0</port>
+            <port name="static">true</port>
+            <port name="mass">0.0</port>
+            <port name="friction">0.0</port>
+            <port name="restitution">0.0</port>
+            <port name="rotation">0.0</port>
+            <port name="velocityX">0.0</port>
+            <port name="velocityY">0.0</port>
+            <port name="angularVelocity">0.0</port>
+            <port name="linearDamping">0.0</port>
+            <port name="angularDamping">0.0</port>
+            <port name="width">400.0</port>
+            <port name="height">20.0</port>
+        </node>
+        <node name="box2" type="nodebox.physics.Box" x="182" y="124">
+            <port name="create">false</port>
+            <port name="x">360.0</port>
+            <port name="y">380.0</port>
+            <port name="static">true</port>
+            <port name="mass">0.0</port>
+            <port name="friction">0.0</port>
+            <port name="restitution">0.0</port>
+            <port name="rotation">0.0</port>
+            <port name="velocityX">0.0</port>
+            <port name="velocityY">0.0</port>
+            <port name="angularVelocity">0.0</port>
+            <port name="linearDamping">0.0</port>
+            <port name="angularDamping">0.0</port>
+            <port name="width">200.0</port>
+            <port name="height">20.0</port>
+        </node>
+        <node name="box3" type="nodebox.physics.Box" x="346" y="126">
+            <port name="create">false</port>
+            <port name="x">200.0</port>
+            <port name="y">300.0</port>
+            <port name="static">true</port>
+            <port name="mass">0.0</port>
+            <port name="friction">0.0</port>
+            <port name="restitution">0.0</port>
+            <port name="rotation">0.0</port>
+            <port name="velocityX">0.0</port>
+            <port name="velocityY">0.0</port>
+            <port name="angularVelocity">0.0</port>
+            <port name="linearDamping">0.0</port>
+            <port name="angularDamping">0.0</port>
+            <port name="width">20.0</port>
+            <port name="height">100.0</port>
+        </node>
+        <node name="box4" type="nodebox.physics.Box" x="511" y="127">
+            <port name="create">false</port>
+            <port name="x">400.0</port>
+            <port name="y">300.0</port>
+            <port name="static">true</port>
+            <port name="mass">0.0</port>
+            <port name="friction">0.0</port>
+            <port name="restitution">0.0</port>
+            <port name="rotation">0.0</port>
+            <port name="velocityX">0.0</port>
+            <port name="velocityY">0.0</port>
+            <port name="angularVelocity">0.0</port>
+            <port name="linearDamping">0.0</port>
+            <port name="angularDamping">0.0</port>
+            <port name="width">20.0</port>
+            <port name="height">100.0</port>
+        </node>
+        <node name="trigger1" type="nodebox.builtins.utility.Trigger" x="11" y="3"/>
+        <node name="world1" rendered="true" type="nodebox.physics.World" x="185" y="10">
+            <port name="gravityX">0.0</port>
+            <port name="gravityY">10.0</port>
+            <port name="reset">false</port>
+        </node>
+        <conn input="box1" inputPort="world" output="world1" outputPort="world"/>
+        <conn input="world1" inputPort="reset" output="trigger1" outputPort="triggered"/>
+        <conn input="box1" inputPort="create" output="world1" outputPort="hasReset"/>
+        <conn input="box2" inputPort="world" output="world1" outputPort="world"/>
+        <conn input="box2" inputPort="create" output="world1" outputPort="hasReset"/>
+        <conn input="box3" inputPort="world" output="world1" outputPort="world"/>
+        <conn input="box3" inputPort="create" output="world1" outputPort="hasReset"/>
+        <conn input="box4" inputPort="world" output="world1" outputPort="world"/>
+        <conn input="box4" inputPort="create" output="world1" outputPort="hasReset"/>
+    </node>
+</ndbx>
