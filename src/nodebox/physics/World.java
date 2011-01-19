@@ -1,5 +1,6 @@
 package nodebox.physics;
 
+import net.phys2d.math.ROVector2f;
 import net.phys2d.raw.strategies.QuadSpaceStrategy;
 import nodebox.node.*;
 import processing.core.PGraphics;
@@ -7,7 +8,9 @@ import net.phys2d.math.Vector2f;
 import net.phys2d.raw.Body;
 import net.phys2d.raw.BodyList;
 import net.phys2d.raw.StaticBody;
+import net.phys2d.raw.shapes.Shape;
 import net.phys2d.raw.shapes.Box;
+import net.phys2d.raw.shapes.Circle;
 
 @Description("Populate a World.")
 @Category("Physics")
@@ -20,8 +23,6 @@ public class World extends Node {
     public final BodyListPort pBodies = new BodyListPort(this, "bodies", Port.Direction.OUTPUT);
     public final JointListPort pJoints = new JointListPort(this, "joints", Port.Direction.OUTPUT);
     public final BooleanPort pHasReset = new BooleanPort(this, "hasReset", Port.Direction.OUTPUT);
-
-    private int amount = 5;
 
     private net.phys2d.raw.World world;
     private float time = 0;
@@ -42,13 +43,6 @@ public class World extends Node {
 		Body body6 = new StaticBody("Ground3", new Box(20.0f, 100.0f));
 		body6.setPosition(400.0f, 300);
 		world.add(body6);
-
-        for (int i=0;i<amount;i++) {
-            float sz =10 + (float)(Math.random() * 50f);
-            Body b = new Body("b" + i, new Box(sz, sz), 100f);
-            b.setPosition(100f + (float) (Math.random() * 250f), (float) (Math.random() * 250f));
-            world.add(b);
-        }
     }
 
     @Override
@@ -72,7 +66,11 @@ public class World extends Node {
 
         for (int i=0;i<bodies.size();i++) {
             Body body = bodies.get(i);
-            drawBoxBody(g,body,(Box) body.getShape());
+            Shape shape = body.getShape();
+            if (shape instanceof Box)
+                drawBoxBody(g, body, (Box) shape);
+            else if (shape instanceof Circle)
+                drawCircleBody(g, body, (Circle) shape);
         }
     }
 
@@ -83,7 +81,13 @@ public class World extends Node {
         Vector2f v2 = pts[1];
         Vector2f v3 = pts[2];
         Vector2f v4 = pts[3];
-		
+
         g.quad(v1.x, v1.y, v2.x, v2.y, v3.x, v3.y, v4.x, v4.y);
+    }
+
+    protected void drawCircleBody(PGraphics g, Body body, Circle circle) {
+        ROVector2f pos = body.getPosition();
+        g.ellipseMode(PGraphics.CENTER);
+        g.ellipse(pos.getX(), pos.getY(), circle.getRadius() * 2, circle.getRadius() * 2);
     }
 }

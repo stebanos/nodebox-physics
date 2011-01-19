@@ -25,7 +25,7 @@ public class JointListPort extends Port {
         if (value instanceof JointList || value == null) {
             set((JointList) value);
         } else {
-            throw new IllegalArgumentException("Value is not a BodyList.");
+            throw new IllegalArgumentException("Value is not a JointList.");
         }
     }
 
